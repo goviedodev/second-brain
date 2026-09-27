@@ -11,10 +11,14 @@
             "id": "efdfc56cd45da1c3",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "00 - Inbox/Fundamentos Clave - Mappings en Solidity.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Fundamentos Clave - Mappings en Solidity"
             }
           }
         ]
@@ -186,6 +190,10 @@
   },
   "active": "efdfc56cd45da1c3",
   "lastOpenFiles": [
+    "01 - Projects/Blockchain Accelerator/Anexo - Vulnerabilidades Críticas en Smart Contracts.md",
+    "00 - Inbox/Fundamentos Clave - Mappings en Solidity.md",
+    "01 - Projects/Blockchain Accelerator/Blockchain Accelerator - Skool (Jose).md",
+    "00 - Inbox/Anexo - Vulnerabilidades Críticas en Smart Contracts.md",
     "03 - Resources/Blockchain e IA/Blockchain e Inteligencia Artificial - Jake Van Clief.md",
     "AGENTS.md",
     "03 - Resources/Capacitacion Vibe Coding y Ecosistemas Agenticos/programa-capacitacion-vibe-coding.docx",
@@ -214,9 +222,6 @@
     "01 - Projects/Entrevista Java FullStack/Entrevista Java 10 - Kafka.md",
     "01 - Projects/Entrevista Java FullStack/Entrevista Java 09 - GCP - Pub-Sub, Functions, Cloud Run.md",
     "01 - Projects/Entrevista Java FullStack/Entrevista Java 08 - Seguridad - JWT, OAuth2 y Spring Security.md",
-    "01 - Projects/Entrevista Java FullStack/Entrevista Java 07 - Spring Boot.md",
-    "01 - Projects/Entrevista Java FullStack/Entrevista Java 06 - Concurrencia y Virtual Threads.md",
-    "01 - Projects/Entrevista Java FullStack/Entrevista Java 05 - Programación funcional en Java.md",
     "03 - Resources/Productividad",
     "01 - Projects/Entrevista Java FullStack",
     "CLAUDE.md.tmp.197375.5ff694405cd1",
