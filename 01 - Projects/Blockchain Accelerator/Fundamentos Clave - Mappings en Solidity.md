@@ -1,6 +1,6 @@
 ---
 created: 2026-09-27
-tags: [inbox, blockchain, solidity, fundamentos]
+tags: [project, blockchain, solidity, fundamentos]
 source: Blockchain Accelerator - Skool (Jose)
 ---
 

@@ -57,7 +57,7 @@ contract BasicCryptoBank {
         emit Deposit(msg.sender, msg.value);
     }
 
-    // Retirar ETH del banco
+    // Retirar ETH del banco // CEI PATTERN
     function withdraw(uint256 amount) external {
         require(amount > 0, "Monto invalido");
         require(balances[msg.sender] >= amount, "Saldo insuficiente");

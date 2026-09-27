@@ -96,3 +96,5 @@ Cuando el usuario pida crear algo (artículo, presentación, plan), usar como ma
 - No inventar contenido: si falta información, dejarlo explícito o preguntar.
 - No mover, renombrar ni editar notas del usuario fuera de una depuración o de una petición explícita.
 - Mantener las notas atómicas: una idea principal por nota cuando sea posible.
+- **Comando "versiona":** Cada vez que el usuario indique la palabra o instrucción "versiona", se debe hacer automáticamente un `git commit` descriptivo de los cambios pendientes y un `git push` al repositorio remoto.
+

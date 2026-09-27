@@ -54,7 +54,7 @@ function deposit() external payable {
 ## 2. Ataque de Reentrancia (*Reentrancy Attack*)
 
 - **Nivel de Severidad:** Crítica (responsable del hack histórico de *The DAO* en 2016).
-- **Vector de Ataque:** Secuestro del flujo de ejecución mediante transferencias externas previas a la actualización de estado.
+- **Vector de Ataque:** Secuestro del flujo de ejecución mediante transferencias externas ***previas a la actualización de estado.***
 - **Descripción:**
   Ocurre cuando un contrato inteligente transfiere Ether a una dirección externa antes de actualizar su registro contable interno. Si el receptor es un contrato malicioso, la transferencia de ETH activa automáticamente su función `receive()` o `fallback()`. Desde allí, el atacante vuelve a invocar `withdraw` de forma recursiva antes de que su balance original haya sido descontado.
 
@@ -78,9 +78,45 @@ function withdrawVulnerable(uint256 amount) external {
 4. El `receive()` del atacante toma el control y, como `balances[msg.sender]` aún no fue reducido, vuelve a llamar a `withdraw(1 ETH)`.
 5. El ciclo recursivo vacía la totalidad de fondos custodiados por el contrato víctima.
 
-### Regla de Oro / Mitigación
-1. **Patrón Checks-Effects-Interactions (CEI):** Actualizar siempre las variables de estado internas (`balances[msg.sender] -= amount;`) **antes** de cualquier llamada o transferencia externa (`call`).
-2. **Mutex / Bloqueo de Reentrancia:** Utilizar modificadores como `nonReentrant` de librerías auditadas como OpenZeppelin.
+### Regla de Oro / Mitigación: El Patrón CEI (Checks-Effects-Interactions)
+
+Para blindar el contrato frente a ataques de reentrancia, la regla de oro de la arquitectura en Solidity es aplicar rigurosamente el **patrón CEI**, que dicta que el flujo de cualquier función debe estructurarse en **tres pasos secuenciales e inmutables**:
+
+1. **Checks (Verificaciones):**
+   - **Qué significa:** Primero hay que verificar todas las condiciones previas, permisos de usuario y validez de argumentos antes de realizar cualquier cambio interno o externo.
+   - **Herramientas:** Uso de `require()`, `revert()` o *custom errors*.
+   - **Ejemplo:** `require(balances[msg.sender] >= amount, "Saldo insuficiente");`.
+
+2. **Effects (Efectos / Actualización del Estado):**
+   - **Qué significa:** Después de validar, hay que actualizar el estado interno y la contabilidad del contrato en almacenamiento (*storage*) **antes** de interactuar con el exterior.
+   - **Ejemplo:** `balances[msg.sender] -= amount;`. Si el usuario intenta reingresar recursivamente, su balance ya habrá sido descontado y las verificaciones del paso 1 lo bloquearán de inmediato.
+
+3. **Interactions (Interacciones externas):**
+   - **Qué significa:** Finalmente, generar la interacción o interacciones con otras entidades externas (transferencias de Ether nativo mediante `.call{value: ...}("")`, llamadas a contratos externos o tokens ERC-20).
+   - **Por qué al final:** Al ceder el control del hilo de ejecución a un contrato externo, nuestro contrato ya se encuentra en un estado contable coherente y seguro.
+
+```solidity
+// ✅ SEGURO: Implementación estricta del patrón CEI
+function withdrawSecure(uint256 amount) external {
+    // 1. CHECKS: Verificar primero
+    require(amount > 0, "Monto invalido");
+    require(balances[msg.sender] >= amount, "Saldo insuficiente");
+
+    // 2. EFFECTS: Actualizar el estado interno despues
+    balances[msg.sender] -= amount;
+
+    // 3. INTERACTIONS: Generar la interaccion externa al final
+    (bool success, ) = msg.sender.call{value: amount}("");
+    require(success, "Fallo al enviar ETH");
+
+    emit Withdraw(msg.sender, amount);
+}
+```
+
+- **Capa adicional en profundidad:** Como complemento al patrón CEI, utilizar modificadores de exclusión mutua como `nonReentrant` de OpenZeppelin (*ReentrancyGuard*).
+
+**==Evita el Reetrance Attack.==**
+
 
 ---
 
