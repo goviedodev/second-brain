@@ -211,12 +211,23 @@ contract CryptoBankWithLimit {
 - **Modificadores (`modifier`):** Permiten interceptar la ejecución de una función antes de su cuerpo (con `_;`), esencial para el control de acceso (`onlyOwner`).
 - **Timing del balance en `payable`:** En Solidity, al entrar a una función `payable`, el ETH de la transacción ya se acreditó al contrato; por eso la validación es `address(this).balance <= maxBalance`.
 
+- **Tamaño de `uint256`:** `uint256` es un entero sin signo de 256 bits, es decir, puede representar **2^256** valores distintos. Como empieza en 0, su rango es de `0` a `2^256 - 1` (≈ 1.16 × 10^77). Por eso es el tipo por defecto en Solidity (`uint` es alias de `uint256`) y el que se usa para saldos en wei
+- **Sacar el maximo para pruebas**: uint256 - (0 - 2^256-1)
+
+
 ## Recursos y enlaces
 - [Remix Ethereum IDE](https://remix.ethereum.org/)
 
 ## Anexo: Vulnerabilidades Críticas en Smart Contracts
 
 - Documento de referencia y detalle técnico: [[Anexo - Vulnerabilidades Críticas en Smart Contracts]]
+
+## Fundamentos Clave de Solidity
+
+- Mappings y contabilidad interna: [[Fundamentos Clave - Mappings en Solidity]]
+- Modificadores y el operador `_;`: [[Fundamentos Clave - Modificadores y el Operador _; en Solidity]]
+- Testing: los archivos de test terminan en `.t.sol`: [[Fundamentos Clave - Testing en Solidity (.t.sol)]]
+
 
 ## Próximos pasos / Acciones
 
